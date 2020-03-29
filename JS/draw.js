@@ -27,7 +27,8 @@ var canvas = document.getElementById('canvas');
         Over.src = './Over.png';
         var mouseX=0;
         var mouseY=0;
-        var btnPlay = new button(763,1139,480,560)
+        var btnPlay = new button(763,1139,480,560);
+        var btnRetry = new buttonRetry(742,1160,570,641);
         var xg=0; 
         var count=22;
         var veloc=30;
@@ -129,7 +130,8 @@ var canvas = document.getElementById('canvas');
         ctx.font = '50px Helvetica';
         ctx.fillText('Adventures',20,130);*/
         }
-
+        var temp2=0;
+        //Retry function
         function gameOver(ctx,Over)
         {
             if(!Over.complete)
@@ -144,7 +146,48 @@ var canvas = document.getElementById('canvas');
                 drawGrass(ctx,grass);
                 ctx.drawImage(Over,0,0,canvas.width,canvas.height);
             },5);
+
+            document.addEventListener('click',Retry,false); 
         }
+        var mouseX2;
+        var mouseY2;
+        function Retry(f)
+        {
+            if(temp2==0)
+            {
+            mouseX2=f.pageX-canvas.offsetLeft;
+            mouseY2=f.pageY-canvas.offsetTop;
+            console.log(mouseX2);
+            console.log(mouseY2);
+            if(btnRetry.checkRetry())
+            {
+                if((btnRetry.checkRetry())==true)
+                {
+                temp2++;
+                }
+                drawShinobi(ctx,shinobi);
+                posX=150;
+                
+            }
+            }
+        }
+
+        function buttonRetry(xLR,xRR,yTR,yBR)
+        {
+            this.xLeftR=xLR;
+            this.xRightR=xRR;
+            this.yTopR=yTR;
+            this.yBotR=yBR;
+        }
+
+        buttonRetry.prototype.checkRetry = function()
+        {
+            if(this.xLeftR <= mouseX2 && mouseX2<=this.xRightR && this.yTopR <= mouseY2 && mouseY2<=this.yBotR)
+            {   
+                return true;
+            }
+        }
+
         //Mouse click+button
         function mouseClicked(d)
         {
@@ -152,13 +195,14 @@ var canvas = document.getElementById('canvas');
             {
             mouseX=d.pageX-canvas.offsetLeft;
             mouseY=d.pageY-canvas.offsetTop;
-            console.log(mouseX);
-            console.log(mouseY);
             if(btnPlay.checkClicked())
             {
+                if((btnPlay.checkClicked())==true)
+                {
+                    temp++;
+                }
                 drawShinobi(ctx,shinobi);
             }
-            temp++;
             }
         }
         function button(xL,xR,yT,yB)
@@ -211,7 +255,6 @@ var canvas = document.getElementById('canvas');
             {
                 console.log("RIGHT");
                 posX=posX+15;
-                smooth+=0.5;
             }
             if((e.keyCode==40 && crouch == false) || (e.keyCode==83 && crouch == false))
             {
