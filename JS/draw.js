@@ -23,6 +23,8 @@ var canvas = document.getElementById('canvas');
         spear.src = './SpikesT.png';
         var menu = new Image();
         menu.src = './Menu.png';
+        var Over = new Image();
+        Over.src = './Over.png';
         var mouseX=0;
         var mouseY=0;
         var btnPlay = new button(763,1139,480,560)
@@ -128,6 +130,21 @@ var canvas = document.getElementById('canvas');
         ctx.fillText('Adventures',20,130);*/
         }
 
+        function gameOver(ctx,Over)
+        {
+            if(!Over.complete)
+            {
+                setTimeout(function(){
+                    drawMenu(ctx,Over);
+                },50);
+                return;
+            }
+            setInterval(function(){
+                background(ctx,bamboo); 
+                drawGrass(ctx,grass);
+                ctx.drawImage(Over,0,0,canvas.width,canvas.height);
+            },5);
+        }
         //Mouse click+button
         function mouseClicked(d)
         {
@@ -158,9 +175,6 @@ var canvas = document.getElementById('canvas');
                 return true;
             }
         }
-        var smooth;
-
-
         
         function drawShinobi(ctx,shinobi)
         {
@@ -240,6 +254,11 @@ var canvas = document.getElementById('canvas');
                     ctx.drawImage(shinobi,posX,posY,213,426); 
                 }
                 drawGrass(ctx,grass); 
+
+                if(posX>=1687)
+                {
+                    gameOver(ctx,Over);
+                }
             }, 5);
         }
 
