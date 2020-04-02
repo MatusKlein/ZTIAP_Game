@@ -184,6 +184,7 @@ var canvas = document.getElementById('canvas');
         {
             if(this.xLeftR <= mouseX2 && mouseX2<=this.xRightR && this.yTopR <= mouseY2 && mouseY2<=this.yBotR)
             {   
+                console.log('Som tu');
                 return true;
             }
         }
